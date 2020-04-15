@@ -1,0 +1,21 @@
+
+<table class="table table-borderless">
+  <thead class="thead-light">
+    <tr >
+      <th scope="col">ID</th>
+      <th scope="col">NOME</th>
+      <th scope="col">CPF</th>
+    </tr>
+
+  </thead>
+  <tbody>
+    <tr class="table-success" *ngFor="let user of usuarios">
+      <td>{{user.id}}</td>
+      <td>{{user.nome}}</td>
+      <td>{{user.cpf}}</td>
+    </tr>
+  </tbody>
+
+
+
+</table>
