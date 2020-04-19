@@ -8,6 +8,8 @@
     <input type="text" class="form-control" id="nome" name="nome" [(ngModel)]="nome" placeholder="Pesquisar Nome">
   </div>
   <button type="button" (click)="buscar()" class="btn btn-primary mb-2">Buscar</button>
+
+  <button type="button" [routerLink]="['/usuarioAdd']" routerLinkActive="router-link-active" style="margin-left: 5px;" class="btn btn-success mb-2">Novo</button>
 </form>
 
 <!-- DataTales Example -->
@@ -17,6 +19,9 @@
     <h6 class="m-0 font-weight-bold text-primary">Tabela de Usuários</h6>
   </div>
 </div>
+
+
+
 
 <div class="card-body">
   <div class="table-responsive">
@@ -32,6 +37,9 @@
       </thead>
       <tfoot>
 
+
+
+
         <th scope="col">ID</th>
         <th scope="col">NOME</th>
         <th scope="col">CPF</th>
@@ -45,8 +53,8 @@
             <td>{{user.id}}</td>
             <td>{{user.nome}}</td>
             <td>{{user.cpf}}</td>
-            <td> <button (click)="deleteUsuario(user.id)" class="btn btn-success">Excluir</button> </td>
-            <td> <button  class="btn btn-success">Editar</button> </td>
+            <td> <button (click)="deleteUsuario(user.id)" class="btn btn-danger">Excluir</button> </td>
+            <td> <button  [routerLink]="['/usuarioAdd', user.id]" routerLinkActive="router-link-active"  class="btn btn-warning">Editar</button> </td>
           </tr>
         <tr>
       </tbody>
