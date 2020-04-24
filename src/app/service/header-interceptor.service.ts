@@ -1,5 +1,7 @@
 import { Injectable, NgModule } from '@angular/core';
-import { HttpInterceptor, HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
+import { HttpInterceptor, HTTP_INTERCEPTORS, HttpClientModule, HttpErrorResponse, HttpEvent, HttpResponse } from '@angular/common/http';
+import { throwError } from 'rxjs';
+import { catchError, tap } from 'rxjs/operators';
 
 /*Classe que pega o token*/
 
@@ -14,7 +16,7 @@ export class HeaderInterceptorService implements HttpInterceptor {
       const tokenRequest = req.clone({
         headers: req.headers.set('Authorization', token)
       });
-      return next.handle(tokenRequest);
+      return next.handle(tokenRequest).pipe(catchError(this.processarError));
     } else {
       return next.handle(req);
     }
@@ -25,6 +27,19 @@ export class HeaderInterceptorService implements HttpInterceptor {
 
   constructor() { }
 
+  processarError(error: HttpErrorResponse) {
+    let errorMessage = 'Erro desconhecido';
+    if (error.error instanceof ErrorEvent) {
+      console.error(error.error);
+      errorMessage = 'error: ' + error.error.error;
+    } else {
+      errorMessage = 'Código: ' + error.error.code + '\nMensagem :' + error.error.error;
+
+    }
+    window.alert(errorMessage);
+    return throwError(errorMessage);
+
+  }
 }
 
 @NgModule({
