@@ -16,9 +16,15 @@ export class HeaderInterceptorService implements HttpInterceptor {
       const tokenRequest = req.clone({
         headers: req.headers.set('Authorization', token)
       });
-      return next.handle(tokenRequest).pipe(catchError(this.processarError));
+      return next.handle(tokenRequest).pipe(
+        tap((event: HttpEvent<any>) => {
+          if (event instanceof HttpResponse && (event.status === 200 || event.status === 201)) {
+            console.info('sucesso na operação');
+          }
+        })
+        , catchError(this.processarError));
     } else {
-      return next.handle(req);
+      return next.handle(req).pipe(catchError(this.processarError));
     }
 
   }

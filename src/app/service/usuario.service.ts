@@ -42,4 +42,8 @@ export class UsuarioService {
       return false;
     }
   }
+  removerTelefone(id): Observable<any> {
+    return this.http.delete(AppConstants.baseUrl + 'removeTelefone/' + id, {responseType: 'text'});
+  }
+
 }

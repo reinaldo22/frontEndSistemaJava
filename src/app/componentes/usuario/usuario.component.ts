@@ -24,19 +24,23 @@ export class UsuarioComponent implements OnInit {
   }
   /*Deleto pelo id*/
   deleteUsuario(id: number) {
-    this.usuarioServices.deletarUsuario(id).subscribe(data => {
-      console.log('Retorno do mètodo delete: ' + data);
 
-      /*Atualizo a lista de usuarios*/
-      this.usuarioServices.getUsuarioList().subscribe(data => {
-        this.usuarios = data;
+    if (confirm('Deseja mesmo Excluír usuário?')) {
+      this.usuarioServices.deletarUsuario(id).subscribe(data => {
+        console.log('Retorno do mètodo delete: ' + data);
+
+        /*Atualizo a lista de usuarios*/
+        this.usuarioServices.getUsuarioList().subscribe(data => {
+          this.usuarios = data;
+        });
       });
-    });
+    }
   }
   buscar() {
     this.usuarioServices.buscaNome(this.nome).subscribe(data => {
       this.usuarios = data;
     });
   }
+
 
 }

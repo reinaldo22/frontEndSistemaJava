@@ -36,10 +36,20 @@ export class UsuarioAddComponent implements OnInit {
         this.novo();
         console.log('Usuario salvo!! ' + data);
       });
+
     }
   }
   novo() {
     this.usuario = new Usuario();
+  }
+  deletarTelefone(id) {
+    if (id !== null && confirm('Deseja remover?')) {
+      this.userService.removerTelefone(id).subscribe(data => {
+        const index = this.usuario.telefones.indexOf(id);
+        this.usuario.telefones.splice(index - 1, 1);
+        console.info('Telefone removido = ' + data);
+      });
+    }
   }
 
 }
