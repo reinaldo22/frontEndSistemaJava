@@ -16,6 +16,12 @@ export class UsuarioService {
 
     return this.http.get<any>(AppConstants.baseUrl);
   }
+
+  getUsuarioPage(pagina): Observable<any> {
+
+    return this.http.get<any>(AppConstants.baseUrl + 'page/' + pagina);
+  }
+
   /*Deleta usuario pelo id*/
   deletarUsuario(id: number): Observable<any> {
     return this.http.delete(AppConstants.baseUrl + id, { responseType: 'text' });
@@ -43,7 +49,7 @@ export class UsuarioService {
     }
   }
   removerTelefone(id): Observable<any> {
-    return this.http.delete(AppConstants.baseUrl + 'removeTelefone/' + id, {responseType: 'text'});
+    return this.http.delete(AppConstants.baseUrl + 'removeTelefone/' + id, { responseType: 'text' });
   }
 
 }

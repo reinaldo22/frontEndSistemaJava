@@ -1,3 +1,4 @@
+import { Telefone } from './../../../model/telefone';
 import { UsuarioService } from './../../../service/usuario.service';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
@@ -11,11 +12,12 @@ import { Usuario } from 'src/app/model/usuario';
 export class UsuarioAddComponent implements OnInit {
 
   usuario = new Usuario();
+  telefone = new Telefone();
 
   constructor(private routeActive: ActivatedRoute, private userService: UsuarioService) { }
   /*Carrega a pagina e se caso tenha algum id na url*/
   ngOnInit() {
-    let id = this.routeActive.snapshot.paramMap.get('id');
+    const id = this.routeActive.snapshot.paramMap.get('id');
 
     if (id != null) {
       this.userService.buscaPorId(id).subscribe(data => {
@@ -39,17 +41,36 @@ export class UsuarioAddComponent implements OnInit {
 
     }
   }
-  novo() {
-    this.usuario = new Usuario();
-  }
-  deletarTelefone(id) {
+  deletarTelefone(id, i) {
+
+    if (id == null) {
+      this.usuario.telefones.splice(i, i);
+      return;
+    }
+
+
     if (id !== null && confirm('Deseja remover?')) {
       this.userService.removerTelefone(id).subscribe(data => {
-        const index = this.usuario.telefones.indexOf(id);
-        this.usuario.telefones.splice(index - 1, 1);
-        console.info('Telefone removido = ' + data);
+
+        this.usuario.telefones.splice(i, 1);
+
+        console.log('Telefone removido = ' + data);
       });
     }
+  }
+  addFone() {
+
+    if (this.usuario.telefones === undefined) {
+      this.usuario.telefones = new Array<Telefone>();
+    }
+    this.usuario.telefones.push(this.telefone);
+
+    this.telefone = new Telefone();
+
+  }
+  novo() {
+    this.usuario = new Usuario();
+    this.telefone = new Telefone();
   }
 
 }
